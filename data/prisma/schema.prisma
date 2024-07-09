@@ -17,7 +17,7 @@ model Floor {
 model Matrix {
   id      Int      @id @default(autoincrement())
   floorId Int
-  planta  Floor   @relation(fields: [floorId], references: [id])
+  floor  Floor   @relation(fields: [floorId], references: [id])
   size    String
   weight  Weight[]
   beacons Beacon[]
@@ -39,4 +39,6 @@ model Beacon {
   identifier   String
   x            Float
   y            Float
+  major        Int
+  minor        Int
 }
