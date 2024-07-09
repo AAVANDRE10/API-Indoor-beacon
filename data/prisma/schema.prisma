@@ -7,18 +7,36 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Students {
-  id    Int     @id @default(autoincrement())
-  number String  @unique
-  name  String
-  city String
-  birthday String
+model Floor {
+  id     Int      @id @default(autoincrement())
+  name   String
+  photo  String
+  matrix Matrix[]
 }
 
-model Users{
-  id String  @id @default(uuid())
-  name String  @db.VarChar(255)
-  email String @unique
-  password String
-  isAdmin   Boolean @default(false)
+model Matrix {
+  id      Int      @id @default(autoincrement())
+  floorId Int
+  planta  Floor   @relation(fields: [floorId], references: [id])
+  size    String
+  weight  Weight[]
+  beacons Beacon[]
+}
+
+model Weight {
+  id      Int    @id @default(autoincrement())
+  matrixId Int
+  matrix Matrix @relation(fields: [matrixId], references: [id])
+  x       Int
+  y       Int
+  weight  Int
+}
+
+model Beacon {
+  id           Int    @id @default(autoincrement())
+  matrixId     Int
+  matrix       Matrix @relation(fields: [matrixId], references: [id])
+  identifier   String
+  x            Float
+  y            Float
 }
