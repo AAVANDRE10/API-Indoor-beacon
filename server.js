@@ -3,12 +3,34 @@ require('dotenv').config();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const express = require('express');
+const swaggerUi = require('swagger-ui-express');
+const swaggerJsdoc = require('swagger-jsdoc');
 
 const router = require('./routes/index');
 
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
+
+const options = {
+    definition: {
+        openapi: '3.0.0',
+        info: {
+            title: 'Routes API Indoor',
+            version: '1.0.0',
+            description: 'API documentation',
+        },
+        servers: [
+            {
+                url: 'https://api-indoor-beacon.vercel.app/',
+            },
+        ],
+    },
+    apis: ['./routes/*.js'],
+};
+
+const specs = swaggerJsdoc(options);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 app.use('/api/', router);
 
