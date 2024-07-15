@@ -22,7 +22,7 @@ const options = {
         },
         servers: [
             {
-                url: process.env.SERVER_URL || 'http://localhost:8080',
+                url: 'https://api-indoor-beacon.vercel.app/',
             },
         ],
     },
